@@ -2,15 +2,6 @@
 # tasks file for docker-elastic
 - hosts: docker
   tasks:
-        - name: Copiando configuracion
-          become: true
-          template:
-                src: "elasticsearch.yml.j2"
-                dest: "/home/challenge/conf/elasticsearch.yml"
-                owner: root
-                group: root
-                mode: '0644'
-                backup: yes
         - name: Create a elastic container
           docker_container:
             name: elastic
@@ -21,9 +12,19 @@
             - '9200:9200'
             - '9300:9300'
             volumes:
-            - /home/challenge/conf/:/etc/elasticsearch/
-            - /home/challenge/data/:/var/lib/elasticsearch/
-            - /home/challenge/logs/:/var/log/elasticsearch/
+            - /home/challenge/conf/:/config/:rw
+            - /home/challenge/data/:/data/:rw
+            - /home/challenge/logs/:/logs/:rw
+            - /home/etc/:/:rw
+        - name: Copiando configuracion
+          become: true
+          template:
+                src: "elasticsearch.yml.j2"
+                dest: "/home/challenge/conf/elasticsearch.yml"
+                owner: root
+                group: root
+                mode: '0644'
+                backup: yes
         - name: open ports tcp
           firewalld:
             port: 9200/tcp
