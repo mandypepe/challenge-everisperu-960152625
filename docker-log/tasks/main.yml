@@ -1,2 +1,21 @@
 ---
 # tasks file for docker-log
+- hosts: docker
+  tasks:
+    - name: Copiando configuracion
+      become: true
+      template:
+        src: "logstash.yml.j2"
+        dest: "/home/challenge/lost/conf/logstash.yml"
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+    - name: Create a logs container
+      docker_container:
+        name: logs
+        image: logstash:7.4.2
+        state: started
+        recreate: yes
+        volumes:
+            - /home/challenge/lost/conf/:/usr/share/logstash/config/
