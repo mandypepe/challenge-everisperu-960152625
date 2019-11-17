@@ -7,24 +7,27 @@
           template:
                 src: "elasticsearch.yml.j2"
                 dest: "/home/challenge/conf/elasticsearch.yml"
-                owner: root
-                group: root
+                owner: '1000'
+                group: '1000'
                 mode: '0644'
                 backup: yes
         - name: Create a elastic container
           docker_container:
-            name: elastic
+            name: elasticsearch
             image: elasticsearch:7.4.2
             state: started
             recreate: yes
+            env:
+              discovery.type: "single-node"
             exposed_ports:
             - '9200:9200'
             - '9300:9300'
-            restart_policy: always
+            #restart_policy: always
             volumes:
-            - /home/challenge/conf/:/config/
+            #- /home/challenge/conf/:/config/
             - /home/challenge/data/:/data/
             - /home/challenge/logs/:/logs/
+            #- /home/challenge/conf/:/usr/share/elasticsearch/config/
         - name: open ports tcp
           firewalld:
             port: 9200/tcp

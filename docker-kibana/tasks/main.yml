@@ -2,6 +2,15 @@
 # tasks file for docker-kibana
 - hosts: docker
   tasks:
+        - name: Copiando configuracion
+          become: true
+          template:
+                src: "kibana.yml.j2"
+                dest: "/home/challenge/kibana/conf/kibana.yml"
+                owner: root
+                group: root
+                mode: '0644'
+                backup: yes
         - name: Create a kibana container
           docker_container:
             name: kibana
@@ -11,17 +20,8 @@
             exposed_ports:
               - "5601:5601"
             volumes:
-              - /home/challenge/conf/kibana:/usr/share/kibana/config/kibana.yml
-            links: "elastic:elasticsearch"
-        - name: Copiando configuracion
-          become: true
-          template:
-                src: "kibana.yml.j2"
-                dest: "/home/challenge/conf/kibana.yml"
-                owner: root
-                group: root
-                mode: '0644'
-                backup: yes
+              - /home/challenge/kibana/conf/:/usr/share/kibana/config/
+            links: "elasticsearch:elasticsearch"
         - name: open ports tcp
           firewalld:
             port: 5601/tcp
