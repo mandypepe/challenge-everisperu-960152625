@@ -1,16 +1,12 @@
 ---
-# tasks file for user                           
-- name: Create New Users          
-  hosts: all
-  become: true                                   
-  tasks:                          
-    - name: Create Users Task
-      user:                       
-        name: challenge                 
-        state: present            
-        password: "$6$fvAlLpWz9l30Vc9t$4xt5yYkSdOH0C.N/jgtAuPViVJZ8a6X94nKzoPB4mC9J6.OKnM.r54QrmN5pSzIBNk9GjZPq4JHXwpXX0DhzS/"
-        shell: /bin/bash   
-        groups: wheel                                                                                                   
-        append: true 
-        createhome: yes        
-        home: /home/challenge
+- name: Create USER
+  become: true                     
+  user:                      
+    name: challenge                 
+    state: present            
+    password: "$6$fvAlLpWz9l30Vc9t$4xt5yYkSdOH0C.N/jgtAuPViVJZ8a6X94nKzoPB4mC9J6.OKnM.r54QrmN5pSzIBNk9GjZPq4JHXwpXX0DhzS/"
+    shell: /bin/bash
+    groups: wheel                                                                                                   
+    append: true 
+    createhome: yes
+    home: /home/challenge
