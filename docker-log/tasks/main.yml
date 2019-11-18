@@ -2,7 +2,7 @@
 # tasks file for docker-log
 - hosts: docker
   tasks:
-    - name: Copiando configuracion
+    - name: Copiando configuracion logstash
       become: true
       template:
         src: "logstash.yml.j2"
@@ -11,16 +11,15 @@
         group: root
         mode: '0644'
         backup: yes
-    - name: Copiando configuracion
+    - name: Copiando configuracion pipelines
       become: true
       template:
         src: "pipelines.yml.j2"
-        dest: "/home/challenge/lost/pipe/pipelines.yml"
+        dest: "/home/challenge/lost/conf/pipelines.yml"
         owner: root
         group: root
         mode: '0644'
         backup: yes
-            
     - name: Create a logs container
       docker_container:
         name: logs
@@ -29,4 +28,3 @@
         recreate: yes
         volumes:
             - /home/challenge/lost/conf/:/usr/share/logstash/config/
-            - /home/challenge/lost/pipe/:/usr/share/logstash/config/
