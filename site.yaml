@@ -21,3 +21,4 @@
     - docker-elastic
     - docker-kibana
     - docker-log
+    - docker-go-rest-api

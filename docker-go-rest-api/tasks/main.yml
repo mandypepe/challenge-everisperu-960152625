@@ -1,0 +1,13 @@
+---
+# tasks file for docker-go-rest-api
+- name: Create a logs container
+  docker_container:
+    name: gorestapi
+    image: chentex/go-rest-api
+    state: started
+    recreate: yes
+    exposed_ports:
+    - '0.0.0.0:8080:8080'
+    ports:
+    - '0.0.0.0:8080:8080'
+    restart_policy: always
