@@ -19,3 +19,5 @@
   roles:
     - user
     - docker-elastic
+    - docker-kibana
+    - docker-log
