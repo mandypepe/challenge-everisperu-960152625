@@ -1,0 +1,11 @@
+---
+input {
+	tcp {
+		port => 5000
+	}
+}
+output {
+	elasticsearch {
+		hosts => "172.17.0.2:9200"
+	}
+}

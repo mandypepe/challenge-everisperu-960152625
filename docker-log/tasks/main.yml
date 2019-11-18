@@ -11,6 +11,16 @@
         group: root
         mode: '0644'
         backup: yes
+    - name: Copiando configuracion
+      become: true
+      template:
+        src: "pipelines.yml.j2"
+        dest: "/home/challenge/lost/pipe/pipelines.yml"
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+            
     - name: Create a logs container
       docker_container:
         name: logs
@@ -19,3 +29,4 @@
         recreate: yes
         volumes:
             - /home/challenge/lost/conf/:/usr/share/logstash/config/
+            - /home/challenge/lost/pipe/:/usr/share/logstash/config/

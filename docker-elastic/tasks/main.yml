@@ -20,9 +20,11 @@
             env:
               discovery.type: "single-node"
             exposed_ports:
-            - '9200:9200'
-            - '9300:9300'
-            #restart_policy: always
+            - '0.0.0.0:9200:9200'
+            - '0.0.0.0:9300:9300'
+            ports:
+            - '0.0.0.0:9200:9200'
+            restart_policy: always
             volumes:
             #- /home/challenge/conf/:/config/
             - /home/challenge/data/:/data/
